@@ -6,15 +6,21 @@ import Pagination from "../components/Pagination";
 import { useEffect, useState } from "react";
 import DropDown from "../components/DropDownFilter";
 import Image from "next/image";
-import { types } from "./constants";
+import { SelectFilter } from "../components/SelectFilter";
+import { status, types } from "./constants";
 
 export default function Directorio() {
   //cambio de pagina
   const [page, setPage] = useState(1);
   //dropDown mostar
   const [active, setActive] = useState(false);
+  const [isOpenStatus, setIsOpenStatus] = useState(false);
+  const [isOpenType, setIsOpenType] = useState(false);
+
   //arreglo de los generos
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
   //estado de contruccion del expoint
   const [strEndpoint, setStrEnpoint] = useState(`anime?page=${page}`);
   //cargamos directamente todos los animes
@@ -28,23 +34,55 @@ export default function Directorio() {
     //obtenemos solos los id [1,3]
     const idGenres = selectedGenres.map((g) => g.id).join(",");
     //aplicamos un nuevo endpoitn renderiza pero hardodeado en 1
-    setStrEnpoint(`anime?page=1&genres=${idGenres}`);
+    let endpoint = `anime?page=1`;
+    if (idGenres) {
+      endpoint += `&genres=${idGenres}`;
+    }
+    if (selectedType) {
+      endpoint += `&type=${selectedType}`;
+    }
+    if (selectedStatus) {
+      endpoint += `&status=${selectedStatus}`;
+    }
+    setStrEnpoint(endpoint);
     //cerramos el dropdown
     setActive(false);
+    setIsOpenStatus(false);
+    setIsOpenType(false);
     //posicionamos page en 1
     setPage(1);
   }
 
   function aplplySearch(input) {
     const idGenres = selectedGenres.map((g) => g.id).join(",");
-    setStrEnpoint(`anime?page=1&genres=${idGenres}&q=${input}`);
+    let endpoint = `anime?page=1&q=${input}`;
+    if (idGenres) {
+      endpoint += `&genres=${idGenres}`;
+    }
+    if (selectedType) {
+      endpoint += `&type=${selectedType}`;
+    }
+    if (selectedStatus) {
+      endpoint += `&status=${selectedStatus}`;
+    }
+    setStrEnpoint(endpoint);
     setInput("");
     setPage(1);
   }
   useEffect(() => {
     const idGenres = selectedGenres.map((g) => g.id).join(",");
+    let endpoint = `anime?page=${page}`;
+    if (idGenres) {
+      endpoint += `&genres=${idGenres}`;
+    }
+    if (selectedType) {
+      endpoint += `&type=${selectedType}`;
+    }
+    if (selectedStatus) {
+      endpoint += `&status=${selectedStatus}`;
+    }
     //hacemos un endpoint diferente cuando cambioamos de pagina
-    setStrEnpoint(`anime?page=${page}&genres=${idGenres}`);
+    setStrEnpoint(endpoint);
 
     //dependencia sera apge
   }, [page]);
@@ -98,48 +136,79 @@ export default function Directorio() {
         </div>
 
         {/* filtros btones */}
-        <div className="relative flex justify-between  w-full border-b-bluePastel-500/20 border-b-[1] rounded-b-sm  p-2 md:justify-evenly">
-          <button
-            className=" border-[1] p-0.5 cursor-pointer flex"
-            onClick={() => setActive(!active)}
-          >
-            Genero
-            <Image
-              src="/dropDown.svg"
-              width={20}
-              height={20}
-              alt="iconDropDown"
-            ></Image>
-          </button>
-          {/* botonnes a agregar funcionalidades*/}
-          <button className=" border-[1] p-0.5 cursor-pointer flex opacity-20">
-            Status
-            <Image
-              src="/dropDown.svg"
-              width={20}
-              height={20}
-              alt="iconDropDown"
-            ></Image>
-          </button>
+        <div className="flex justify-between  w-full border-b-bluePastel-500/20 border-b-[1] rounded-b-sm  p-2 md:justify-evenly">
+          <div className="relative">
+            <button
+              className="  p-1 cursor-pointer flex btnFilters-vfx"
+              onClick={() => setActive(!active)}
+            >
+              Genero
+              <Image
+                src="/dropDown.svg"
+                width={20}
+                height={20}
+                alt="iconDropDown"
+              ></Image>
+            </button>
 
-          <button className=" border-[1] p-0.5 cursor-pointer flex opacity-20">
-            Type
-            <Image
-              src="/dropDown.svg"
-              width={20}
-              height={20}
-              alt="iconDropDown"
-            ></Image>
-          </button>
-          <DropDown
-            isActive={active}
-            //pasamos en el setSelectedGenres(function) y el selectedGenres en []
-            //paso dos regresa
-            onChangeGenres={setSelectedGenres}
-            isSelectedGenres={selectedGenres}
-          ></DropDown>
+            <DropDown
+              isActive={active}
+              //pasamos en el setSelectedGenres(function) y el selectedGenres en []
+              //paso dos regresa
+              onChangeGenres={setSelectedGenres}
+              isSelectedGenres={selectedGenres}
+            ></DropDown>
+          </div>
+
+          {/* botonnes a agregar funcionalidades*/}
+          <div className="relative">
+            <button
+              onClick={() => setIsOpenStatus(!isOpenStatus)}
+              className="  p-1 cursor-pointer flex btnFilters-vfx"
+            >
+              {selectedStatus || "Status"}
+              <Image
+                src="/dropDown.svg"
+                width={20}
+                height={20}
+                alt="iconDropDown"
+              ></Image>
+            </button>
+            <SelectFilter
+              isOpen={isOpenStatus}
+              datos={status}
+              onSelected={(item) => {
+                setSelectedStatus(item);
+                setIsOpenStatus(false);
+              }}
+            ></SelectFilter>
+          </div>
+          <div className="relative">
+            <button
+              onClick={() => setIsOpenType(!isOpenType)}
+              className=" p-1 cursor-pointer flex btnFilters-vfx"
+            >
+              {selectedType || "Type"}
+
+              <Image
+                src="/dropDown.svg"
+                width={20}
+                height={20}
+                alt="iconDropDown"
+              ></Image>
+            </button>
+            <SelectFilter
+              isOpen={isOpenType}
+              datos={types}
+              onSelected={(item) => {
+                setSelectedType(item);
+                setIsOpenType(false);
+              }}
+            ></SelectFilter>
+          </div>
+
           <button
-            className=" border-[1] p-0.5 cursor-pointer flex"
+            className="  p-1 cursor-pointer flex btnFilters-vfx"
             onClick={() => applyFilter()}
           >
             Filtar

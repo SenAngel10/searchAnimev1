@@ -44,11 +44,11 @@ export default function DropDown({
   }
   // console.log(data);
   return (
-    <div className="absolute bg-amber-900 grid grid-cols-3 text-[14px] gap-1 z-50 top-full">
+    <div className="absolute grid grid-cols-3 text-[14px] gap-1 z-50 top-full min-w-max bg-dropdown">
       {data.map((g) => (
         <label
           key={g.mal_id}
-          className="hover:bg-amber-500 hover:cursor-pointer transition-colors rounded-md flex items-center"
+          className="selectionDrop hover:cursor-pointer transition-colors flex items-center"
         >
           <input
             className="ml-1"

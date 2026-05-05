@@ -80,6 +80,32 @@ body {
     border-width: 2px;
     padding: 1%;
   }
+  .bg-dropdown {
+    color: rgba(247, 246, 229);
+    background-color: rgba(43, 5, 62, 0.7);
+    border-radius: 2%;
+    padding: 5%;
+    border-color: rgba(54, 6, 77);
+  }
+  .selectionDrop {
+    border-radius: 10px;
+    gap: 1px;
+    padding: 1px;
+  }
+  .selectionDrop:hover {
+    background-color: var(--color-purpleDark-100);
+    color: rgba(43, 5, 62, 0.7);
+  }
+  .btnFilters-vfx {
+    border-width: 1px;
+    border-color: rgba(253, 253, 250, 0.3);
+    border-radius: 20px;
+    color: rgba(247, 246, 229);
+    background-color: rgba(43, 5, 62, 0.4);
+  }
+  .btnFilters-vfx:hover {
+    background-color: rgba(54, 6, 77);
+  }
 }
 
 @layer utilities {
