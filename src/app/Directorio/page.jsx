@@ -3,9 +3,10 @@ import Navigation from "../components/Navigation";
 import useApiData from "../hooks/useApiCall";
 import Card from "../components/Card";
 import Pagination from "../components/Pagination";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DropDown from "../components/DropDownFilter";
 import Image from "next/image";
+import { types } from "./constants";
 
 export default function Directorio() {
   //cambio de pagina

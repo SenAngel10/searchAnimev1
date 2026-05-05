@@ -13,7 +13,7 @@ export default function Card({
   return (
     <div
       key={id_anime}
-      className="relative flex flex-col justify-end rounded-4xl bg-cream-500 h-[550px] w-[380px] border-4 border-white/30 text-center p-6 m-2 text-sm text-shadow-cream-800/70 text-shadow-sm overflow-hidden shadow-2xl"
+      className="relative flex flex-col justify-end rounded-4xl bg-cream-500 h-[530] w-[380] border-4 border-white/30 text-center p-6 m-2 text-sm text-shadow-cream-800/70 text-shadow-sm overflow-hidden shadow-2xl"
       style={{
         backgroundImage: `url(${img_anime})`,
         backgroundPosition: "center",

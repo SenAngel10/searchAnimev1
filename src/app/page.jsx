@@ -4,6 +4,7 @@ import useApiData from "./hooks/useApiCall";
 import Pagination from "./components/Pagination";
 import Card from "./components/Card";
 import Navigation from "./components/Navigation";
+import Information from "./components/Information";
 export default function Home() {
   const [page, setPage] = useState(1);
   const { data, next, isLoading, isError } = useApiData({
@@ -25,6 +26,7 @@ export default function Home() {
   return (
     <div>
       <main className="grid grid-cols-1 place-items-center">
+        <Information></Information>
         <Navigation></Navigation>
         <section className="mt-12 mb-12 relative p-1 md:flex md:flex-wrap md:justify-center">
           {data.map((a) => {
