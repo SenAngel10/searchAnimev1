@@ -40,12 +40,12 @@ export default function Information() {
           ></Image>
         </a>
         <a
-          href="www.linkedin.com/in/brayanangelcast"
+          href="https://www.linkedin.com/in/brayanangelcast"
           className="absolute top-[55%] left-[10%] rounded-full p-2 hover:bg-bluePastel-400/40 transition-colors"
         >
           <Image
             alt="iconCode"
-            src="/inBug-White.png"
+            src="/InBug-White.png"
             width={20}
             height={20}
           ></Image>
